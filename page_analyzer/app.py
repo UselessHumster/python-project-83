@@ -5,6 +5,7 @@ from flask import (
     get_flashed_messages,
     request,
     url_for,
+    redirect
 )
 from validators import url as validate_url
 from dotenv import load_dotenv
@@ -61,5 +62,23 @@ def urls_get(url_id):
     messages = get_flashed_messages(with_categories=True)
     return render_template(
         'urls/show.html',
-        url=url, messages=messages)
+        url=url,
+        url_checks=db.UrlChecksRepository(conn).get_all(url),
+        messages=messages)
+
+@app.route('/urls/<url_id>/checks', methods=['POST'])
+def urls_checks(url_id):
+    conn = db.get_connection()
+    urls_repo = db.UrlRepository(conn)
+    url = urls_repo.find(url_id=url_id)
+
+    if not url:
+        return render_template('404.html'), 404
+
+    url_checks_repo = db.UrlChecksRepository(conn)
+    url_checks_repo.save(url)
+    db.commit(conn)
+    flash('Страница успешно проверена','success')
+    return redirect(url_for('urls_get', url_id=url_id)), 302
+
 
