@@ -45,13 +45,13 @@ class UrlChecksRepository:
     def __init__(self, connection):
         self.conn = connection
 
-    def save(self, url: Url):
+    def save(self, url: Url, check):
         with self.conn.cursor() as cur:
             cur.execute('''
-                INSERT INTO url_checks (url_id, created_at)
-                VALUES (%s, NOW())
+                INSERT INTO url_checks (url_id, created_at, status_code)
+                VALUES (%s, NOW(), %s)
                 RETURNING id, created_at;
-                ''', (url.id, ))
+                ''', (url.id, check['status_code']))
 
             res = cur.fetchone()
             return UrlChecks(

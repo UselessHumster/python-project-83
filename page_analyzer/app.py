@@ -11,6 +11,7 @@ from validators import url as validate_url
 from dotenv import load_dotenv
 import os
 import page_analyzer.database as db
+from page_analyzer.analyzer import analyze_url
 from page_analyzer.models import Url
 
 
@@ -45,7 +46,6 @@ def urls_post():
         url = repo.save(Url(url_name))
         db.commit(conn)
         flash('Страница успешно добавлена', category='success')
-        print('flash added')
     messages = get_flashed_messages(with_categories=True)
     print(messages)
     return render_template(
@@ -75,10 +75,14 @@ def urls_checks(url_id):
     if not url:
         return render_template('404.html'), 404
 
-    url_checks_repo = db.UrlChecksRepository(conn)
-    url_checks_repo.save(url)
-    db.commit(conn)
-    flash('Страница успешно проверена','success')
+
+    if not (check := analyze_url(url.name)):
+        flash('Произошла ошибка при проверке', 'error')
+    else:
+        url_checks_repo = db.UrlChecksRepository(conn)
+        url_checks_repo.save(url, check)
+        db.commit(conn)
+        flash('Страница успешно проверена','success')
     return redirect(url_for('urls_get', url_id=url_id)), 302
 
 
