@@ -48,10 +48,21 @@ class UrlChecksRepository:
     def save(self, url: Url, check):
         with self.conn.cursor() as cur:
             cur.execute('''
-                INSERT INTO url_checks (url_id, created_at, status_code)
-                VALUES (%s, NOW(), %s)
+                INSERT INTO url_checks (
+                url_id, 
+                created_at, 
+                status_code, 
+                h1, 
+                title, 
+                description)
+                VALUES (%s, NOW(), %s, %s, %s, %s)
                 RETURNING id, created_at;
-                ''', (url.id, check['status_code']))
+                ''', (
+                url.id,
+                check['status_code'],
+                check['h1'],
+                check['title'],
+                check['description']))
 
             res = cur.fetchone()
             return UrlChecks(
