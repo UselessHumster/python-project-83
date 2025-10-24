@@ -1,28 +1,26 @@
-import pook
 import pytest
 import requests
 
 from page_analyzer.analyzer import analyze_url, find_useful, is_reachable
 
 
-@pook.on
-def test_check_url():
-    pook.get('https://test.test', reply=200, response_json={"You": "cool"})
+def test_check_url(requests_mock):
+    requests_mock.get('https://test.test', status_code=200, json={"You": "cool"})
+
     res = is_reachable('https://test.test')
     assert res
 
-    pook.get('https://test.test', reply=404)
+    requests_mock.get('https://test.test', status_code=404)
     res = is_reachable('https://test.test')
     assert not res
 
 
-@pook.on
-def test_analyze_url():
-    pook.get('https://test.test', reply=200)
+def test_analyze_url(requests_mock):
+    requests_mock.get('https://test.test', status_code=200)
     res = analyze_url('https://test.test')
     assert res['status_code'] == 200
 
-    pook.get('https://test.test', reply=404)
+    requests_mock.get('https://test.test', status_code=404)
     res = analyze_url('https://test.test')
     assert res is None
 
