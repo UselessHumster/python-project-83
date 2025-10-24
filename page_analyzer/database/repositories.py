@@ -31,14 +31,17 @@ class UrlRepository:
             res = cur.fetchone()
             if not res:
                 return None
-            return Url(id=res['id'], name=res['name'], created_at=res['created_at'])
+            return Url(id=res['id'], name=res['name'],
+                       created_at=res['created_at'])
 
     def get_all(self):
         with self.conn.cursor() as cur:
-            cur.execute("SELECT id, name, created_at FROM urls ORDER BY created_at DESC;")
+            cur.execute('''
+            SELECT id, name, created_at FROM urls ORDER BY created_at DESC;''')
             res = cur.fetchall()
             for row in res:
-                yield Url(id=row['id'], name=row['name'], created_at=row['created_at'])
+                yield Url(id=row['id'], name=row['name'],
+                          created_at=row['created_at'])
 
 
 class UrlChecksRepository:

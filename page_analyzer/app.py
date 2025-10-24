@@ -1,19 +1,20 @@
+import os
+
+from dotenv import load_dotenv
 from flask import (
     Flask,
-    render_template,
     flash,
     get_flashed_messages,
+    redirect,
+    render_template,
     request,
     url_for,
-    redirect
 )
 from validators import url as validate_url
-from dotenv import load_dotenv
-import os
+
 import page_analyzer.database as db
 from page_analyzer.analyzer import analyze_url
 from page_analyzer.models import Url
-
 
 load_dotenv()
 app = Flask(__name__)
@@ -30,6 +31,7 @@ def urls_index():
     conn = db.get_connection()
     repo = db.UrlRepository(conn)
     return render_template('urls/index.html', urls=repo.get_all())
+
 
 @app.route('/urls', methods=['POST'])
 def urls_post():
@@ -52,6 +54,7 @@ def urls_post():
         'urls/show.html',
         url=url, messages=messages)
 
+
 @app.route('/urls/<url_id>', methods=['GET'])
 def urls_get(url_id):
     conn = db.get_connection()
@@ -66,6 +69,7 @@ def urls_get(url_id):
         url_checks=db.UrlChecksRepository(conn).get_all(url),
         messages=messages)
 
+
 @app.route('/urls/<url_id>/checks', methods=['POST'])
 def urls_checks(url_id):
     conn = db.get_connection()
@@ -75,14 +79,13 @@ def urls_checks(url_id):
     if not url:
         return render_template('404.html'), 404
 
-
     if not (check := analyze_url(url.name)):
         flash('Произошла ошибка при проверке', 'error')
     else:
         url_checks_repo = db.UrlChecksRepository(conn)
         url_checks_repo.save(url, check)
         db.commit(conn)
-        flash('Страница успешно проверена','success')
+        flash('Страница успешно проверена', 'success')
     return redirect(url_for('urls_get', url_id=url_id)), 302
 
 

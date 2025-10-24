@@ -1,10 +1,7 @@
-from page_analyzer.database.database import (
-    get_connection,
-    commit
-)
+from page_analyzer.database.database import commit, get_connection
 from page_analyzer.database.repositories import (
+    UrlChecksRepository,
     UrlRepository,
-    UrlChecksRepository
 )
 
 __all__ = ['get_connection',

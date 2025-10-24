@@ -1,6 +1,7 @@
 import pook
 
-from page_analyzer.analyzer import is_reachable, analyze_url
+from page_analyzer.analyzer import analyze_url, is_reachable
+
 
 @pook.on
 def test_check_url():
