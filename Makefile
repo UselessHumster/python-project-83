@@ -23,3 +23,6 @@ lint-fix:
 
 test:
 	uv run pytest tests/
+
+test-coverage:
+	uv run pytest --cov=page_analyzer --cov-report xml
