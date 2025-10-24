@@ -26,5 +26,7 @@ make start
 
 ---
 ### About
-Simple page analyzer, that check if page is available and shows it's description and title
+Simple page analyzer, that check if page is available and shows it's description and title.
+
+
 You can check out the app [here](https://python-project-83-fgro.onrender.com/)
