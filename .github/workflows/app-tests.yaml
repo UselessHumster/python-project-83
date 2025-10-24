@@ -23,4 +23,7 @@ jobs:
           make lint
       - name: Run test coverage
         run: |
+          make test-coverage
+      - name: Run tests
+        run: |
           make test
