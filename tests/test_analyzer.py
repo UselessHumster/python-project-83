@@ -1,7 +1,8 @@
-import requests
 import pook
 import pytest
-from page_analyzer.analyzer import analyze_url, is_reachable, find_useful
+import requests
+
+from page_analyzer.analyzer import analyze_url, find_useful, is_reachable
 
 
 @pook.on
