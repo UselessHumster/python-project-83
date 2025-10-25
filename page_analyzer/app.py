@@ -43,14 +43,15 @@ def urls_post():
     normalized_url = normalize_url(url)
     conn = db.get_connection()
     repo = db.UrlRepository(conn)
+
     url = repo.find(url_name=normalized_url)
     if url:
         flash('Страница уже существует', category='info')
         return redirect(url_for('urls_get', url_id=url.id)), 302
-    else:
-        url = repo.save(Url(normalized_url))
-        db.commit(conn)
-        flash('Страница успешно добавлена', category='success')
+
+    url = repo.save(Url(normalized_url))
+    db.commit(conn)
+    flash('Страница успешно добавлена', category='success')
 
     messages = get_flashed_messages(with_categories=True)
     return render_template(
