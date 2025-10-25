@@ -17,7 +17,8 @@ def test_normalize_url():
 
 
 def test_check_url(requests_mock):
-    requests_mock.get('https://test.test', status_code=200, json={"You": "cool"})
+    requests_mock.get('https://test.test',
+                      status_code=200, json={"You": "cool"})
 
     res = is_reachable('https://test.test')
     assert res
