@@ -46,6 +46,7 @@ def urls_post():
     url = repo.find(url_name=normalized_url)
     if url:
         flash('Страница уже существует', category='info')
+        return redirect(url_for('urls_get', url_id=url.id)), 302
     else:
         url = repo.save(Url(normalized_url))
         db.commit(conn)
