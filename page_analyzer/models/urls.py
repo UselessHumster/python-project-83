@@ -8,3 +8,5 @@ class Url:
     name: str
     id: Optional[int] = None
     created_at: Optional[datetime] = None
+    status_code: Optional[int] = None
+    last_check: Optional[datetime] = None

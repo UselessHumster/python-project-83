@@ -1,7 +1,19 @@
 import pytest
 import requests
 
-from page_analyzer.analyzer import analyze_url, find_useful, is_reachable
+from page_analyzer.analyzer import (
+    analyze_url,
+    find_useful,
+    is_reachable,
+    normalize_url,
+)
+
+
+def test_normalize_url():
+    expected = "https://example.test"
+    url = "https://example.test/some/random/path"
+    normalized = normalize_url(url)
+    assert normalized == expected
 
 
 def test_check_url(requests_mock):

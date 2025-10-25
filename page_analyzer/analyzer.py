@@ -1,6 +1,11 @@
 import requests
+from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 
+
+def normalize_url(url):
+    parsed = urlparse(url)
+    return f'{parsed.scheme}://{parsed.netloc}'
 
 def is_reachable(url: str):
     try:

@@ -37,11 +37,22 @@ class UrlRepository:
     def get_all(self):
         with self.conn.cursor() as cur:
             cur.execute('''
-            SELECT id, name, created_at FROM urls ORDER BY created_at DESC;''')
+            SELECT DISTINCT ON (u.id) 
+                u.id, 
+                u.name, 
+                u.created_at, 
+                c.status_code, 
+                c.created_at last_check 
+            FROM urls u 
+            LEFT JOIN url_checks c ON 
+                u.id = c.url_id 
+            ORDER BY u.id, last_check DESC;''')
             res = cur.fetchall()
             for row in res:
                 yield Url(id=row['id'], name=row['name'],
-                          created_at=row['created_at'])
+                          created_at=row['created_at'],
+                          status_code=row['status_code'],
+                          last_check=row['last_check'])
 
 
 class UrlChecksRepository:
