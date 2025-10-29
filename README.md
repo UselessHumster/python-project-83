@@ -9,7 +9,6 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=UselessHumster_python-project-83&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=UselessHumster_python-project-83)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=UselessHumster_python-project-83&metric=bugs)](https://sonarcloud.io/summary/new_code?id=UselessHumster_python-project-83)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=UselessHumster_python-project-83&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=UselessHumster_python-project-83)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=UselessHumster_python-project-83&metric=coverage)](https://sonarcloud.io/summary/new_code?id=UselessHumster_python-project-83)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=UselessHumster_python-project-83&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=UselessHumster_python-project-83)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=UselessHumster_python-project-83&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=UselessHumster_python-project-83)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=UselessHumster_python-project-83&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=UselessHumster_python-project-83)
